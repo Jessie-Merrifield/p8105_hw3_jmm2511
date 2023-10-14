@@ -24,8 +24,7 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 options(
   ggplot2.continuous.colour = "viridis",
-  ggplot2.continuous.fill = "viridis"
-)
+  ggplot2.continuous.fill = "viridis")
 
 scale_colour_discrete = scale_colour_viridis_d
 scale_fill_discrete = scale_fill_viridis_d
@@ -147,7 +146,13 @@ brfss_excellent<-brfss_smart2010 %>%
 Make a “spaghetti” plot of this average value over time within a state (that is, make a plot showing a line for each state across years – the geom_line geometry and group aesthetic will help).
 
 ```{r}
+brfss_spaghetti<-
+  brfss_excellent %>% 
+  group_by(locationabbr) %>% 
+  ggplot(aes(x=year, y=mean_data_value,color=locationabbr))+
+  geom_line()
 
+brfss_spaghetti
 ```
 
 
