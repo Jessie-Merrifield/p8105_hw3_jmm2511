@@ -148,13 +148,40 @@ nhanes_joined<-
 
 Produce a reader-friendly table for the number of men and women in each education category, and create a visualization of the age distributions for men and women in each education category. Comment on these items
 
-```{r}
+```{r sex and education distribution}
+nhanes_joined %>% 
+  group_by(education, sex) %>% 
+  summarise(n=n()) %>% 
+  pivot_wider(
+    names_from = sex,
+    values_from = n
+  ) %>% 
+  knitr::kable(digits = 1)
+# the number of females in each category is similar to males except for there being a greater number of males in the "high school equivalent" category
+
+age_distribution<-
+  nhanes_joined %>% 
+  ggplot(
+    aes(y=age, x=education, color=sex))+
+  geom_boxplot()
+
+age_distribution
+
+age_distribution2<-
+  nhanes_joined %>% 
+  ggplot(
+    aes(x=age, color=education))+
+  geom_density()+
+  facet_grid(~sex)
+
+age_distribution2
 
 ```
 
 Traditional analyses of accelerometer data focus on the total activity over the day. Using your tidied dataset, aggregate across minutes to create a total activity variable for each participant. Plot these total activities (y-axis) against age (x-axis); your plot should compare men to women and have separate panels for each education level. Include a trend line or a smooth to illustrate differences. Comment on your plot.
 
 ```{r}
+
 
 ```
 
